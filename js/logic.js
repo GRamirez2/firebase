@@ -9,43 +9,18 @@
 
 $(".mainArrivals").hide();
 
-// alert("this file is attached");
+
 
 var DB = firebase.database();
+
 
 var train = "";
 var city = "";
 var time = 0;
 var minutes = 0;
+var nextArrival = 0;
 
 
-
-// ---------------------------------------------------------------
-
-DB.ref().on("value", function(snapshot){
-
-		train = snapshot.val().TRAIN;
-		city = snapshot.val().CITY;
-		time = parseInt(snapshot.val().TIME);
-		minutes = parseInt(snapshot.val().MINUTES);
-
-		console.log(train);
-		console.log(city);
-		console.log(time);
-		console.log(minutes);
-
-
-		// print to screen prepending my tboday in my table under my headings for the table
-		var rowTemplate = "<tr><td>"+train+"</td><td>"+city+"</td><td>"+time+"</td><td>"+minutes+"</td></tr>";
- 		$("#newTrain").prepend(rowTemplate);
-
-	},
-
-	function (errorObject) {
-
-  	console.log("The read failed: " + errorObject.code);
-
-});/*END of function snapshot*/
 
 // ---------------------------------------------------------------
 
@@ -55,33 +30,27 @@ DB.ref().on("value", function(snapshot){
 		// Get inputs
 		var trainName = $('#trainName').val().trim(); 
 		var cityName = $('#destination').val().trim(); 
-		var timeName = parseInt($('#time').val().trim()); 
+		var timeName = parseInt($('#firstTrain').val().trim()); 
 		var minutesName = parseInt($('#frequency').val().trim()); 
 
-		// Change what is saved in firebase
-		// DB.ref().set({
-		// 	TRAIN: trainName,
-		// 	CITY: cityName,
-		// 	TIME: timeName,
-		// 	MINUTES: minutesName
-		// });
-
-		// Creates local "temporary" object for holding employee data
+		// temp object for holding data
 		var newTrain = {
+
 			TRAIN: trainName,
 			CITY: cityName,
 			TIME: timeName,
 			MINUTES: minutesName
-	}
+			// ADDED: firebase.database.ServerValue.TIMESTAMP
 
-	// Uploads employee data to the database
-	DB.push(newTrain);
+		}
+
+		DB.ref().push(newTrain);
 
 		console.log(newTrain.TRAIN);
 		console.log(newTrain.CITY);
 		console.log(newTrain.TIME);
 		console.log(newTrain.MINUTES);
-		
+
 // Hide Instruction and show the arival times
 		$(".mainArrivals").show();
 		$("#instructions").hide();
@@ -89,18 +58,81 @@ DB.ref().on("value", function(snapshot){
 // Clear the form fields
 		$('#trainName').val('');
 		$('#destination').val('');
-		$('#time').val('');
+		$('#firstTrain').val('');
 		$('#frequency').val('');
 
-// Print to screen ?? Do I need to print anything?
-	
 
-	
-
+// Don't refresh the page
 		return false;
+
+	
 
 	});
 
-// =================================================================
-// function to create new table row with data
-// My function was a failure
+
+// ---------------------------------------------------------------
+
+DB.ref().on("child_added", function(childSnapshot){
+
+		// console.log(childSnapshot.val());
+
+		// =============moment.js begin===============//
+
+		var timeName = parseInt($('#firstTrain').val().trim()); 
+		var minutesName = parseInt($('#frequency').val().trim()); 
+		// console.log(timeName, minutesName);
+
+		var timeConverted = moment(timeName,"hh:mm");/*.subtract(1,"year");
+		// console.log(timeConverted);
+
+		/*current time*/
+		var timeNow = moment();
+		// console.log("current  time: " + moment(timeNow).format("hh:mm"))
+
+		/*different between current time and first train*/
+		var timeDif = moment().diff(moment(timeConverted), "minutes");
+		// console.log("difference in time: " + timeDif);
+
+		var timeAverage = timeDif % minutesName;
+		// console.log("line 95 time apart" + timeAverage);
+
+		/*time until next train, this is actually in minutes*/
+		var NextTrainM = minutesName - timeAverage;
+		// console.log("line 101, Minutes till next train " + NextTrainM)
+
+		/*have to convert minutes to "real time"*/
+		var NextTrain = moment().add(NextTrainM, "minutes");
+		// console.log("line 105 arrival time: " + moment(NextTrain).format("hh:mm:a"));
+
+		var NextTrainFinal =  moment(NextTrain).format("hh:mm:a")
+		// console.log("line 108" + NextTrainFinal);
+
+
+
+
+
+
+		// =============moment.js END===============//
+
+		var train = childSnapshot.val().TRAIN;
+		var city = childSnapshot.val().CITY;
+		var time = parseInt(childSnapshot.val().TIME);
+		var minutes = parseInt(childSnapshot.val().MINUTES);
+
+		console.log(train);
+		console.log(city);
+		console.log(time);
+		console.log(minutes);
+
+
+		// print to screen prepending my tboday in my table under my headings for the table
+		var rowTemplate = "<tr><td>"+train+"</td><td>"+city+"</td><td>"+minutes+"</td><td>"+NextTrainFinal+"</td></tr>";
+ 		$("#newTrain").prepend(rowTemplate);
+
+	},
+
+	function (errorObject) {
+
+  	console.log("The read failed: " + errorObject.code);
+
+});/*END of function snapshot*/
