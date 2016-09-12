@@ -35,10 +35,8 @@ DB.ref().on("value", function(snapshot){
 		console.log(minutes);
 
 
-		// Need to print to screen as a new tr in my table
+		// print to screen prepending my tboday in my table under my headings for the table
 		var rowTemplate = "<tr><td>"+train+"</td><td>"+city+"</td><td>"+time+"</td><td>"+minutes+"</td></tr>";
-		
-
  		$("#newTrain").prepend(rowTemplate);
 
 	},
@@ -61,17 +59,28 @@ DB.ref().on("value", function(snapshot){
 		var minutesName = parseInt($('#frequency').val().trim()); 
 
 		// Change what is saved in firebase
-		DB.ref().set({
+		// DB.ref().set({
+		// 	TRAIN: trainName,
+		// 	CITY: cityName,
+		// 	TIME: timeName,
+		// 	MINUTES: minutesName
+		// });
+
+		// Creates local "temporary" object for holding employee data
+		var newTrain = {
 			TRAIN: trainName,
 			CITY: cityName,
 			TIME: timeName,
 			MINUTES: minutesName
-		});
+	}
 
-		// console.log(trainName);
-		// console.log(cityName);
-		// console.log(timeName);
-		// console.log(minutesName);
+	// Uploads employee data to the database
+	DB.push(newTrain);
+
+		console.log(newTrain.TRAIN);
+		console.log(newTrain.CITY);
+		console.log(newTrain.TIME);
+		console.log(newTrain.MINUTES);
 		
 // Hide Instruction and show the arival times
 		$(".mainArrivals").show();
