@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Firebase Cloud Server</title>
+	<link rel="stylesheet" type="text/css" href="css/cutestrap.css">
+	<!---do I need a reset? link with cute strap>-->
+	<script src="https://www.gstatic.com/firebasejs/3.3.2/firebase.js"></script>
+</head>
+<body>
+<div class="wrapper-large">
+<div class="ta-center">
+<h1> THIS IS WHERE THE TITLE WILL GO</h1>
+</div><!-- end of Title Div -->
+<hr>
+
+<div id = "instructions">
+This is where I will write some explanation for the page.<br>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmodtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</div><!-- End of Instructions DIV -->
+
+<div class=mainArrivals><!-- Hide this div until we have date to replace the instructions -->
+
+	
+	<div class ="arrivals">
+	<!-- train arrival info goes here -->
+	<h5>Your Train Arrival Information</h5>
+	<table>
+		<theading>
+			<tr id="bold">
+				<th>Train Name</th>
+				<th>Destination</th>
+				<th>Frequency (min)</th>
+				<th>Next Arrival</th>
+			</tr>
+		</theading>
+		<!-- train arrival info goes here -->
+		<traininfo id = "newTrain">
+			<tr id="line">
+				<td id = "train">Sample Train Name</td>
+				<td id = "city">Sample City Name</td>
+				<td id = "minutes">Sample Fequency min</td>
+				<td id = "arrive">Sample next arrive</td>
+			</tr>
+		</traininfo>
+	</table>
+
+	<hr>
+	</div><!-- end of arrival div -->
+
+</div><!-- end of mainArrivls Div -->
+
+<form>
+<h5>Add a train schedule</h5>
+  <label class="textfield">
+    <input type="text" / id = "trainName">
+    <span class="textfield__label">Train Name (ie, The Night Train)</span>
+  </label>
+
+  <label class="textfield">
+    <input type="text" / id = "destination">
+    <span class="textfield__label">Destination (US City)</span>
+  </label>
+
+  <label class="textfield">
+    <input type="text" / id = "time">
+    <span class="textfield__label">First Train Time, in military time, HH:mm (ie, 08:30)</span>
+  </label>
+
+  <label class="textfield">
+    <input type="text" / id = "frequency">
+    <span class="textfield__label">Frequency in minutes (ie, 240)</span>
+  </label>
+
+
+  <br/>
+  <input type="submit" value="SUBMIT" / id = "clickButton">
+</form>
+
+
+
+</div><!-- end of wrapper div -->
+
+
+<script src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
+<script type="text/javascript" src="js/logic.js"></script>
+</body>
+</html>
