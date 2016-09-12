@@ -78,34 +78,34 @@ DB.ref().on("child_added", function(childSnapshot){
 
 		// =============moment.js begin===============//
 
-		var timeName = parseInt($('#firstTrain').val().trim()); 
-		var minutesName = parseInt($('#frequency').val().trim()); 
-		// console.log(timeName, minutesName);
+		// var timeName = parseInt($('#firstTrain').val().trim()); 
+		// var minutesName = parseInt($('#frequency').val().trim()); 
+		// // console.log(timeName, minutesName);
 
-		var timeConverted = moment(timeName,"hh:mm");/*.subtract(1,"year");
-		// console.log(timeConverted);
+		var timeConverted = moment(childSnapshot.val().TIME,"hh:mm").subtract(1,"year");
+		console.log("line 86 "+timeConverted);
 
-		/*current time*/
+		/*current time
 		var timeNow = moment();
 		// console.log("current  time: " + moment(timeNow).format("hh:mm"))
 
 		/*different between current time and first train*/
 		var timeDif = moment().diff(moment(timeConverted), "minutes");
-		// console.log("difference in time: " + timeDif);
+		console.log("difference in time: " + timeDif);
 
-		var timeAverage = timeDif % minutesName;
-		// console.log("line 95 time apart" + timeAverage);
+		var remainder = timeDif % childSnapshot.val().MINUTES;
+		console.log("line 95 time apart" + remainder);
 
 		/*time until next train, this is actually in minutes*/
-		var NextTrainM = minutesName - timeAverage;
-		// console.log("line 101, Minutes till next train " + NextTrainM)
+		var NextTrainM = childSnapshot.val().MINUTES - remainder;
+		console.log("line 101, Minutes till next train " + NextTrainM)
 
 		/*have to convert minutes to "real time"*/
 		var NextTrain = moment().add(NextTrainM, "minutes");
-		// console.log("line 105 arrival time: " + moment(NextTrain).format("hh:mm:a"));
+		console.log("line 105 arrival time: " + moment(NextTrain).format("hh:mm a"));
 
-		var NextTrainFinal =  moment(NextTrain).format("hh:mm:a")
-		// console.log("line 108" + NextTrainFinal);
+		var NextTrainFinal =  moment(NextTrain).format("hh:mm A")
+		console.log("line 108" + NextTrainFinal);
 
 
 
