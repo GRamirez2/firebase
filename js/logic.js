@@ -36,15 +36,13 @@ DB.ref().on("value", function(snapshot){
 
 
 		// Need to print to screen as a new tr in my table
-		// var newtable = $("<td><tr>"+train+"</tr><tr>"+city+"</tr><tr>"+time+"</tr><tr>"+minutes+"</tr></td>")
-		// $("#line").prepend(newtable);
+		var rowTemplate = "<tr><td>"+train+"</td><td>"+city+"</td><td>"+time+"</td><td>"+minutes+"</td></tr>";
 		
 
-		var newTable = $("#line").html("<td><tr>"+train+"</tr><tr>"+city+"</tr><tr>"+time+"</tr><tr>"+minutes+"</tr></td>");
-		$("#newTrain").prepend(newTable);
+ 		$("#newTrain").prepend(rowTemplate);
 
-		
 	},
+
 	function (errorObject) {
 
   	console.log("The read failed: " + errorObject.code);
@@ -70,10 +68,10 @@ DB.ref().on("value", function(snapshot){
 			MINUTES: minutesName
 		});
 
-		console.log(trainName);
-		console.log(cityName);
-		console.log(timeName);
-		console.log(minutesName);
+		// console.log(trainName);
+		// console.log(cityName);
+		// console.log(timeName);
+		// console.log(minutesName);
 		
 // Hide Instruction and show the arival times
 		$(".mainArrivals").show();
@@ -85,8 +83,15 @@ DB.ref().on("value", function(snapshot){
 		$('#time').val('');
 		$('#frequency').val('');
 
-// Print to screen
-		
+// Print to screen ?? Do I need to print anything?
+	
+
+	
 
 		return false;
+
 	});
+
+// =================================================================
+// function to create new table row with data
+// My function was a failure
