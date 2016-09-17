@@ -7,10 +7,6 @@
   firebase.initializeApp(config);
 
 
-$(".mainArrivals").hide();
-
-
-
 var DB = firebase.database();
 
 
@@ -20,6 +16,15 @@ var time = 0;
 var minutes = 0;
 var nextArrival = 0;
 
+$(".mainArrivals").hide();
+$(".btn").on("click", function(){
+
+		$("#instructions").hide();
+		$(".mainArrivals").show();
+
+return false;
+
+});
 
 
 // ---------------------------------------------------------------
@@ -52,8 +57,8 @@ var nextArrival = 0;
 		console.log(newTrain.MINUTES);
 
 // Hide Instruction and show the arival times
-		$(".mainArrivals").show();
-		$("#instructions").hide();
+		// $(".mainArrivals").show();
+		// $("#instructions").hide();
 
 // Clear the form fields
 		$('#trainName').val('');

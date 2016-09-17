@@ -792,3 +792,12 @@ Styleguide 1.2
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+#instructions{
+
+  background-color: #e9cecc;
+  border: 2px solid #a93c32;
+  border-radius: 25px;
+  
+  padding:2em;
+}
